@@ -1,0 +1,497 @@
+import Layout from "./Layout";
+import myTheme from "./theme";
+
+export const theme = myTheme;
+
+<Layout align="center">
+
+# Introducing <span id="blue">Isograph</span>
+
+### The UI framework for teams that move fast <br />&mdash; without breaking things
+
+</Layout>
+
+---
+
+<Layout>
+
+## Why is it so hard to move fast without breaking things?
+
+</Layout>
+
+---
+
+<Layout>
+
+## Communication and coordination
+
+### &nbsp;
+
+</Layout>
+
+---
+
+<Layout>
+
+## Communication and coordination
+
+### And a lack of contracts
+
+</Layout>
+
+---
+
+<Layout>
+
+## Architecture...
+
+## &nbsp;
+
+</Layout>
+
+---
+
+<Layout>
+
+## Architecture...
+
+## At what cost?
+
+</Layout>
+
+---
+
+<Layout>
+
+<img src="http://localhost:8001/static/jc0.png" style={{ maxWidth: "60vw" }} />
+
+</Layout>
+
+---
+
+<Layout>
+
+<img src="http://localhost:8001/static/jc1.png" style={{ maxWidth: "60vw" }} />
+
+</Layout>
+
+---
+
+<Layout>
+
+```
+query CurrentUserDetailPageQuery {
+  currentUser {
+    currentAvatar {
+      avatarUrl
+    }
+  }
+}
+```
+
+</Layout>
+
+---
+
+<Layout>
+
+```
+query CurrentUserDetailPageQuery {
+  currentUser {
+    currentAvatar {
+      ...AvatarComponent_avatar
+    }
+  }
+}
+```
+
+</Layout>
+
+---
+
+<Layout>
+
+## 💡 Each fragment will only ever be read out by a single function 💡
+
+</Layout>
+
+---
+
+<Layout>
+
+## 🤔
+
+</Layout>
+
+---
+
+<Layout>
+
+## I'm lazy
+
+</Layout>
+
+---
+
+<Layout>
+
+## 🤔
+
+</Layout>
+
+---
+
+<Layout>
+
+### All I want to write is
+
+## A function that is passed an Avatar&nbsp;object
+
+</Layout>
+
+---
+
+<Layout>
+
+```
+function MyAvatar({ data }) {
+  // Do React stuff
+}
+```
+
+</Layout>
+
+---
+
+<Layout>
+
+## ⚠️<br />What you are about to see is<br/><span id="blue">actual Isograph code</span><br/>
+
+</Layout>
+
+---
+
+<Layout>
+
+```
+export const AvatarComponent = iso(`
+  field Avatar.AvatarComponent @component {
+    homePage
+  }
+`)(MyAvatar)
+```
+
+</Layout>
+
+---
+
+<Layout>
+
+### To access the result, I want to
+
+## Select a field
+
+</Layout>
+
+---
+
+<Layout>
+
+```
+query CurrentUserDetailPageQuery {
+  currentUser {
+    currentAvatar {
+      ...AvatarComponent_avatar
+    }
+  }
+}
+```
+
+</Layout>
+
+---
+
+<Layout>
+
+```
+query CurrentUserDetailPageQuery {
+  currentUser {
+    currentAvatar {
+      AvatarComponent
+    }
+  }
+}
+```
+
+</Layout>
+
+---
+
+<Layout>
+
+<div style={{position: 'relative'}}>
+
+```
+export const CurrentUserDetailPage = iso(`                .
+  field Query.CurrentUserDetailPage @component {
+    currentUser {
+      currentAvatar {
+        AvatarComponent
+      }
+    }
+  }
+`)(function ({ data }) {
+  // Do react stuff
+});
+```
+
+<div style={{ position: 'absolute', top: 0, right: 0 }}>
+
+```
+
+```
+
+</div>
+</div>
+
+</Layout>
+
+---
+
+<Layout>
+<div style={{position: 'relative'}}>
+
+```
+export const CurrentUserDetailPage = iso(`                .
+  field Query.CurrentUserDetailPage @component {
+    currentUser {
+      currentAvatar {
+        AvatarComponent
+      }
+    }
+  }
+`)(function ({ data }) {
+  return <data.currentUser.currentAvatar.AvatarComponent />
+});
+```
+
+<div style={{ position: 'absolute', top: 0, right: 0 }}>
+
+```
+
+```
+
+</div>
+</div>
+</Layout>
+
+---
+
+<Layout>
+
+```
+const { queryReference } = useLazyReference(
+  iso(`entrypoint Query.CurrentUserDetailPage`),
+  {},
+);
+const DetailPage = useResult(queryReference);
+return <DetailPage />;
+```
+
+</Layout>
+
+---
+
+<Layout>
+
+### Developers define components and the data they need.
+
+## <span id="blue">Isograph</span> takes care of the rest.
+
+</Layout>
+
+---
+
+<Layout>
+
+# Let's talk <span id="blue">advantages</span>
+
+</Layout>
+
+---
+
+<Layout>
+
+## No boilerplate
+
+</Layout>
+
+---
+
+<Layout>
+
+## Discoverability
+
+</Layout>
+
+---
+
+<Layout>
+
+## Data now has a spatial location
+
+</Layout>
+
+---
+
+<Layout>
+
+### Preload
+
+## Did somebody say entrypoints?
+
+</Layout>
+
+---
+
+<Layout>
+
+### Calculate on the server
+
+## Did somebody say RSC?
+
+</Layout>
+
+---
+
+<Layout>
+
+### For GraphQL on the front-end
+
+## Client fields are GraphQL's missing primitive
+
+</Layout>
+
+---
+
+<Layout>
+
+### Big Announcement
+
+</Layout>
+
+---
+
+<Layout>
+
+## 🎉🎉🎉🎉
+
+# Introducing <br/><span id="blue">Isograph 0.1.0</span>
+
+## 🎉🎉🎉🎉
+
+</Layout>
+
+---
+
+<Layout>
+
+## 🎉🎉🎉🎉
+
+# &nbsp;<br/>&nbsp;
+
+## 🎉🎉🎉🎉
+
+</Layout>
+
+---
+
+<Layout>
+
+## 🎉🎉🎉🎉
+
+# Introducing <br/><span id="blue">Isograph 0.1.0</span>
+
+## 🎉🎉🎉🎉
+
+</Layout>
+
+---
+
+<Layout>
+
+## 🎉🎉🎉🎉
+
+# &nbsp;<br />&nbsp;
+
+## 🎉🎉🎉🎉
+
+</Layout>
+
+---
+
+<Layout>
+
+## 🎉🎉🎉🎉
+
+# Introducing <br/><span id="blue">Isograph 0.1.0</span>
+
+## 🎉🎉🎉🎉
+
+</Layout>
+
+---
+
+<Layout>
+
+### Moar
+
+</Layout>
+
+---
+
+<Layout>
+
+## Mutations require global knowledge
+
+</Layout>
+
+---
+
+<Layout>
+
+## Requiring users to have global knowledge doesn't scale
+
+</Layout>
+
+---
+
+<Layout>
+
+## Compiler has global knowledge
+
+</Layout>
+
+---
+
+<Layout>
+
+```
+export const SetBestFriendInput = iso(`
+  field User.SetBestFriend @component {
+    setBestFriend
+    potentialBestFriends {
+      id
+      name
+    }
+  }
+`)(function ({ data }) {
+  return <button
+    onClick={() => setBestFriend(
+      data.potentialBestFriends[0].id
+    )}
+  />
+});
+```
+
+</Layout>

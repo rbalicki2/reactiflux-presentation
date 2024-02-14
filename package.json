@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "start": "concurrently \"npm:mdx\" \"npm:static\"",
+    "mdx": "mdx-deck presentation/presentation.mdx",
+    "static": "python3 server.py"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "mdx-deck": "^4.1.1"
+  },
+  "dependencies": {
+    "react-helmet": "^6.1.0"
+  }
+}

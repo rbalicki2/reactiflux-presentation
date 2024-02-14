@@ -1,0 +1,91 @@
+:root {
+--ifm-color-primary: #4e9ebc;
+--ifm-color-primary-text: #3caed7;
+--ifm-black: #124659;
+--ifm-alt-background: #f5fafc;
+--ifm-alt-background-border: #d6dee1;
+--ifm-kicker: rgba(63, 73, 90, 0.8);
+/* --ifm-alt-background-2: #d5e2e7; */
+--ifm-alt-background-2: white;
+/* --ifm-color-primary-dark: #29784c;
+--ifm-color-primary-darker: #277148;
+--ifm-color-primary-darkest: #205d3b;
+--ifm-color-primary-light: #33925d;
+--ifm-color-primary-lighter: #359962;
+--ifm-color-primary-lightest: #3cad6e; */
+--ifm-h2-font-size: 2.5rem;
+--ifm-h3-font-size: 1.4rem;
+--ifm-code-font-size: 95%;
+--docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+--prism-background-color: #000 !important;
+
+font-family: Maison;
+font-size: 18px;
+}
+
+@font-face {
+  font-family: GTEesti;
+  src: url('/static/fonts/GTEestiDisplay-Bold.woff2');
+}
+
+@font-face {
+  font-family: Maison;
+  src: url('/static/fonts/MaisonNeue-Book.woff2');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: Maison;
+  src: url('/static/fonts/MaisonNeue-Medium.woff2');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: Maison;
+  src: url('/static/fonts/MaisonNeue-Demi.woff2');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: Maison;
+  src: url('/static/fonts/MaisonNeue-Bold.woff2');
+  font-weight: 700;
+}
+
+/* body {
+  text-align: center;
+} */
+
+h1 {
+  font-size: 3em;
+}
+
+#blue {
+  color: var(--ifm-color-primary-text);
+}
+
+li {
+  line-height: 1.5;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+
+h4 {
+  font-size: 1.18em;
+}
+
+h1, h2, h3 {
+  text-align: center;
+}
+
+#nomargin {
+  margin: 0;
+}
+
+#small {
+  font-size: 0.8em;
+}
+
