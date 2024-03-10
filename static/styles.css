@@ -64,6 +64,10 @@ h1 {
   color: var(--ifm-color-primary-text);
 }
 
+#invisible {
+  color: transparent;
+}
+
 li {
   line-height: 1.5;
 }

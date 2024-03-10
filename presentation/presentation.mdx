@@ -1,480 +1,780 @@
-import Layout from "./Layout";
 import myTheme from "./theme";
+import Helmet from "react-helmet";
 
 export const theme = myTheme;
 
-<Layout align="center">
+<Header>
+  <link rel="stylesheet" href="http://localhost:8001/static/styles.css" />
+</Header>
+
+<Footer>
+  <div style={{ display: "flex", justifyContent: "center" }}>
+    <h2 style={{ lineHeight: 0.6 }}>
+      <code id="blue" style={{ textDecoration: "underline" }}>
+        https://isograph.dev/ • twitter.com/isographlabs
+      </code>
+    </h2>
+  </div>
+</Footer>
 
 # Introducing <span id="blue">Isograph</span>
 
 ### The UI framework for teams that move fast <br />&mdash; without breaking things
 
-</Layout>
+<Notes>
+
+- React apps powered by GraphQL data
+- Who here has heard of GraphQL? Relay?
+- Quick overview, why Isograph and how it works, demo, compiler
+
+</Notes>
 
 ---
 
-<Layout>
+## Workflow for developers
 
-## Why is it so hard to move fast without breaking things?
+<Steps>
 
-</Layout>
+- Developers write components & dependencies
+- Isograph compiler generates files
+- Runtime uses those generated files
+
+</Steps>
+
+<Notes>
+
+- 🔶 developers write React components along with their dependencies.
+- a GraphQL field or another Isograph component
+- 🔶 On every save, compiler scans your codebase and generates a bunch of files
+- generate query
+- TypeScript types
+- 🔶 These are then used by the Isograph runtime
+- TLDR compiler and generated files -> great performance, stability and DevEx right out of the box.
+
+</Notes>
 
 ---
 
-<Layout>
+### The UI framework for teams that move fast<br />— without breaking things
+
+<Notes>
+
+- Okay, so Isograph uses the tagline...
+- raises the question
+
+</Notes>
+
+---
+
+## Why is it so hard to move fast<br/>without breaking things?
+
+<Notes>
+
+- It's not, on side projects
+- But you go to work, it's design review this, post mortem that, planning document blah blah
+- Slow and frustrating
+
+</Notes>
+
+---
 
 ## Communication and coordination
 
-### &nbsp;
-
-</Layout>
-
----
-
-<Layout>
-
-## Communication and coordination
+<Steps>
 
 ### And a lack of contracts
 
-</Layout>
+</Steps>
+
+<Notes>
+
+- At some scale, no one can keep app in your head
+- Works locally, unit tests pass, pushes, breaks production
+- 🔶 Lack of contracts
+- More people than can fit in a room
+- Slowing things down, or
+
+</Notes>
 
 ---
-
-<Layout>
 
 ## Architecture...
 
-## &nbsp;
+<Steps>
 
-</Layout>
+### At what cost?
+
+</Steps>
+
+<Notes>
+
+- architect your app... independent...
+- Microservices
+- Website: every component fetches its own data
+- Pretty good, easy to understand
+- 🔶 Costs: redundant network requests without deduplication, increased load on backend, loading states chaotic, network waterfalls
+
+</Notes>
 
 ---
 
-<Layout>
+## One query?
 
-## Architecture...
+<Steps>
 
-## At what cost?
+### <small><small><small>To rule them all</small></small></small>
 
-</Layout>
+</Steps>
+
+<Notes>
+
+- One loading state, deduplication
+- Brittle
+- Components included in multiple screens
+- Several months later
+- JSON.stringify, Object.keys, lands a component
+- You have a choice: decrease bandwidth usage by 0.01% and risk breaking production
+- Over time, append only
+
+</Notes>
 
 ---
 
-<Layout>
+# Enter <span id="blue">GraphQL</span>?
+
+<Notes>
+
+- GraphQL lets you colocate your data dependencies
+- Reason locally
+- Query is updated without any maintenance work, not brittle
+- Isograph improves upon GraphQL and upon Relay
+
+</Notes>
+
+---
 
 <img src="http://localhost:8001/static/jc0.png" style={{ maxWidth: "60vw" }} />
 
-</Layout>
+<Notes>
+
+- What we would like to happen
+- We're given this mock
+
+</Notes>
 
 ---
 
-<Layout>
+<img src="http://localhost:8001/static/jc2.png" style={{ maxWidth: "60vw" }} />
 
-<img src="http://localhost:8001/static/jc1.png" style={{ maxWidth: "60vw" }} />
+<Notes>
 
-</Layout>
+- And we're working on this avatar
+
+</Notes>
 
 ---
-
-<Layout>
 
 ```
 query CurrentUserDetailPageQuery {
-  currentUser {
-    currentAvatar {
-      avatarUrl
+  viewer {
+    avatar {
+      imageUrl(size: "LARGE")
     }
   }
+
+  # other fields
 }
 ```
 
-</Layout>
-
 ---
-
-<Layout>
 
 ```
 query CurrentUserDetailPageQuery {
-  currentUser {
-    currentAvatar {
+  viewer {
+    avatar {
       ...AvatarComponent_avatar
     }
   }
+
+  # other fields
 }
 ```
 
-</Layout>
-
 ---
 
-<Layout>
-
-## 💡 Each fragment will only ever be read out by a single function 💡
-
-</Layout>
+## Each fragment will only ever be<br />read out by a single function
 
 ---
-
-<Layout>
 
 ## 🤔
 
-</Layout>
-
 ---
-
-<Layout>
 
 ## I'm lazy
 
-</Layout>
-
 ---
-
-<Layout>
 
 ## 🤔
 
-</Layout>
+---
+
+## Too lazy
+
+<Steps>
+
+- Globally unique fragment name
+- Prop name
+- Read the fragment reference
+- Spread child fragment & import the component JavaScript
+- Pass fragment reference to any other component
+
+</Steps>
 
 ---
 
-<Layout>
+# Why?
+
+---
+
+## Query servers<br/>or<br/>isolate components
+
+---
 
 ### All I want to write is
 
-## A function that is passed an Avatar&nbsp;object
+<Steps>
 
-</Layout>
+## A function that is passed an Avatar
+
+</Steps>
 
 ---
 
-<Layout>
-
 ```
-function MyAvatar({ data }) {
-  // Do React stuff
+function MyAvatar(avatar) {
+  return <img
+    src={avatar.imageUrl}
+    style={{ borderRadius: "100%" }}
+  />;
 }
 ```
 
-</Layout>
-
 ---
-
-<Layout>
 
 ## ⚠️<br />What you are about to see is<br/><span id="blue">actual Isograph code</span><br/>
 
-</Layout>
-
 ---
-
-<Layout>
 
 ```
 export const AvatarComponent = iso(`
   field Avatar.AvatarComponent @component {
-    homePage
+    imageUrl(size: "LARGE")
   }
 `)(MyAvatar)
 ```
 
-</Layout>
+<Notes>
+
+- Defining a client field named AvatarComponent which is a component
+- GraphQL type Avatar
+- selects imageUrl
+- passed to the MyAvatar function
+- Client fields — which is to say, functions from some graph data to an arbitrary value that are exposed as fields — are the fundamental building block of an Isograph app
+
+</Notes>
 
 ---
-
-<Layout>
 
 ### To access the result, I want to
 
+<Steps>
+
 ## Select a field
 
-</Layout>
+</Steps>
 
 ---
 
-<Layout>
-
 ```
 query CurrentUserDetailPageQuery {
-  currentUser {
-    currentAvatar {
+  viewer {
+    avatar {
       ...AvatarComponent_avatar
     }
   }
 }
 ```
 
-</Layout>
-
 ---
-
-<Layout>
 
 ```
 query CurrentUserDetailPageQuery {
-  currentUser {
-    currentAvatar {
+  viewer {
+    avatar {
       AvatarComponent
     }
   }
 }
 ```
 
-</Layout>
-
 ---
 
-<Layout>
-
-<div style={{position: 'relative'}}>
-
 ```
-export const CurrentUserDetailPage = iso(`                .
+export const CurrentUserDetailPage = iso(`
   field Query.CurrentUserDetailPage @component {
-    currentUser {
-      currentAvatar {
+    viewer {
+      avatar {
         AvatarComponent
       }
     }
   }
-`)(function ({ data }) {
+`)(function (data) {
   // Do react stuff
 });
 ```
 
-<div style={{ position: 'absolute', top: 0, right: 0 }}>
-
-```
-
-```
-
-</div>
-</div>
-
-</Layout>
-
 ---
 
-<Layout>
-<div style={{position: 'relative'}}>
-
 ```
-export const CurrentUserDetailPage = iso(`                .
+export const CurrentUserDetailPage = iso(`
   field Query.CurrentUserDetailPage @component {
-    currentUser {
-      currentAvatar {
+    viewer {
+      avatar {
         AvatarComponent
       }
     }
   }
-`)(function ({ data }) {
-  return <data.currentUser.currentAvatar.AvatarComponent />
+`)(function (data) {
+  return <data.viewer.avatar.AvatarComponent />
 });
 ```
 
-<div style={{ position: 'absolute', top: 0, right: 0 }}>
+<Notes>
 
-```
+- Not doing much
+- Need to make a network request
 
-```
-
-</div>
-</div>
-</Layout>
+</Notes>
 
 ---
 
-<Layout>
-
 ```
-const { queryReference } = useLazyReference(
-  iso(`entrypoint Query.CurrentUserDetailPage`),
-  {},
-);
-const DetailPage = useResult(queryReference);
-return <DetailPage />;
+function MyComponent() {
+  const { queryReference } = useLazyReference(
+    iso(`entrypoint Query.CurrentUserDetailPage`),
+    {},
+  );
+  const DetailPage = useResult(queryReference);
+  return <DetailPage />;
+}
 ```
-
-</Layout>
 
 ---
-
-<Layout>
 
 ### Developers define components and the data they need.
 
 ## <span id="blue">Isograph</span> takes care of the rest.
 
-</Layout>
-
 ---
-
-<Layout>
 
 # Let's talk <span id="blue">advantages</span>
 
-</Layout>
+<Notes>
+
+- I want to spend a bit more time talking about the advantages of client fields
+- Which is to say, the advantage of defining new fields, such as AvatarComponent, whose value is the result of calling some function with some graph data
+
+</Notes>
 
 ---
-
-<Layout>
-
-## No boilerplate
-
-</Layout>
-
----
-
-<Layout>
-
-## Discoverability
-
-</Layout>
-
----
-
-<Layout>
-
-## Data now has a spatial location
-
-</Layout>
-
----
-
-<Layout>
-
-### Preload
-
-## Did somebody say entrypoints?
-
-</Layout>
-
----
-
-<Layout>
-
-### Calculate on the server
-
-## Did somebody say RSC?
-
-</Layout>
-
----
-
-<Layout>
 
 ### For GraphQL on the front-end
 
-## Client fields are GraphQL's missing primitive
+<Steps>
 
-</Layout>
+## <span id="blue">Client fields are GraphQL's missing primitive</span>
 
----
-
-<Layout>
-
-### Big Announcement
-
-</Layout>
+</Steps>
 
 ---
 
-<Layout>
+## Data masking <span id="invisible">without boilerplate</span>
 
-## 🎉🎉🎉🎉
+<Notes>
 
-# Introducing <br/><span id="blue">Isograph 0.1.0</span>
+- Only one function reads a given fragment
+- This means you can reason locally
+- Changes to one component ...
+- Relay also gives you...
+- Already using client fields
 
-## 🎉🎉🎉🎉
-
-</Layout>
-
----
-
-<Layout>
-
-## 🎉🎉🎉🎉
-
-# &nbsp;<br/>&nbsp;
-
-## 🎉🎉🎉🎉
-
-</Layout>
+</Notes>
 
 ---
 
-<Layout>
+## Data masking without boilerplate
 
-## 🎉🎉🎉🎉
+<Notes>
 
-# Introducing <br/><span id="blue">Isograph 0.1.0</span>
+- So what I really should have said
 
-## 🎉🎉🎉🎉
-
-</Layout>
+</Notes>
 
 ---
 
-<Layout>
+## <span id="blue"> `@defer` </span> data and code together
 
-## 🎉🎉🎉🎉
+<Notes>
 
-# &nbsp;<br />&nbsp;
+- Good default
+- Other frameworks, two separate steps
+- Best practice
 
-## 🎉🎉🎉🎉
-
-</Layout>
-
----
-
-<Layout>
-
-## 🎉🎉🎉🎉
-
-# Introducing <br/><span id="blue">Isograph 0.1.0</span>
-
-## 🎉🎉🎉🎉
-
-</Layout>
+</Notes>
 
 ---
 
-<Layout>
+## Is data on screen?
 
-### Moar
+<Notes>
 
-</Layout>
+- Consider client field components
+- Only framework in which it makes sense
+- The JavaScript and the data for the footer
+- Static linking
 
----
-
-<Layout>
-
-## Mutations require global knowledge
-
-</Layout>
+</Notes>
 
 ---
 
-<Layout>
+### Choose when to load
 
-## Requiring users to have global knowledge doesn't scale
+<Steps>
 
-</Layout>
+## Did somebody say entrypoints?
+
+</Steps>
+
+<Notes>
+
+- If defer doesn't wasn't just load it now or load it slightly later
+- Load data when I say so
+- 600px
+- Imperatively loading JS and data at a future time? 🔶 Did somebody say entrypoints?
+
+</Notes>
 
 ---
 
-<Layout>
+### Calculate on the server
+
+<Steps>
+
+## Did somebody say RSC?
+
+</Steps>
+
+<Notes>
+
+- Defer and entrypoints can be used to delay execution
+- Can we speed it up?
+- Client fields that are pure functions
+- Results sent down to the client
+- 🔶 Did somebody say react server components?
+- And if we don't send down the JavaScript
+- Rediscover regular ol GraphQL resolvers
+
+</Notes>
+
+---
+
+## What about <span id="blue">what</span>?
+
+<Steps>
+
+### Dependency injection
+
+</Steps>
+
+<Notes>
+
+- Control when and where execution happens
+- What about what?
+- A parent component only cares that a dependendency matches a given contract
+- What concrete value
+- 🔶 Client fields are a vehicle for dependency injection
+- Mobile -> small avatar
+- Unit test -> dummy component
+
+</Notes>
+
+---
+
+## Better DevTools
+
+<Notes>
+
+- GraphQL claims to enable powerful developer tools
+- Client fields are new fields
+- GraphiQL, saw all client fields defined in your codebase
+- How many redundant user avatar components?
+
+</Notes>
+
+---
+
+# 🎉 Demo time! 🎉
+
+---
+
+## <span id="blue">Rust</span> compiler
+
+<Steps>
+
+### Finally! 😅
+
+</Steps>
+
+---
+
+## What the compiler does
+
+<Steps>
+
+- Parse the GraphQL schema
+- Scan your codebase for `iso` field and entrypoint literals
+- Generate an unvalidated in-memory representation (`IsographSchema`)
+- Contains info on all available fields and entrypoints
+
+</Steps>
+
+---
+
+## Validation
+
+<Steps>
+
+- `IsographSchema` is generic
+- In an unvalidated schema, pointers are strings
+- To validate, turn string pointers into IDs (indexes)
+
+</Steps>
+
+---
+
+## Validating entrypoints <br/><small>(e.g. `Query.CurrentUserDetailPage`)</small>
+
+<Steps>
+
+- Unvalidated: `Vec<(UnvalidatedTypeName, ScalarFieldName)>`
+- Validated: `Vec<ClientFieldId>`
+
+</Steps>
+
+---
+
+## Artifact generation: types of artifacts
+
+<Steps>
+
+- Entrypoint
+- Reader
+- Refetch/mutation artifacts
+- `iso.ts` file
+
+</Steps>
+
+---
+
+## Artifact generation: entrypoint artifact
+
+<Steps>
+
+- One per `` iso`entrypoint ...` `` literal
+- Contain a generated query text
+- Contain a normalization AST
+  - Data structure indicating **how** to store network response
+- Reference a reader artifact
+
+</Steps>
+
+---
+
+## Artifact generation: reader artifact
+
+<Steps>
+
+- One per `` iso`field ...` `` literal
+- Contains a reader AST
+  - Data structure used to read out the field's dependencies
+- Contains a TypeScript type of the read out data
+- Reference the exported JavaScript function (e.g. `export const AvatarComponent = ...`)
+- References the reader artifact for any nested client fields
+
+</Steps>
+
+---
+
+## Artifact generation: refetch artifact
+
+<Steps>
+
+- Similar to normalization artifacts
+
+</Steps>
+
+---
+
+## Artifact generation: `iso.ts` file
+
+<Steps>
+
+- One generated per project
+- Contains overloads for the `iso` function
+- How we achieve type safety
+
+</Steps>
+
+---
+
+```tsx
+export function iso<T>(
+  param: T & StartsWith<"field Avatar.AvatarComponent", T>
+): FunctionWithParam<{ imageUrl: string }>;
+```
+
+---
+
+<img
+  src="http://localhost:8001/static/typesafety.png"
+  style={{ maxWidth: "60vw" }}
+/>
+
+---
+
+## Interned strings
+
+<Steps>
+
+- All strings are interned, i.e. turned into a `u32` index
+- All strings are wrapped in newtypes
+- e.g. `ScalarFieldName` and `SelectableFieldName`
+- Allowlist of type casts, e.g. `ScalarFieldName -> SelectableFieldName`
+
+</Steps>
+
+---
+
+## Interned strings
+
+```rs
+string_key_newtype!(ScalarFieldName);
+string_key_conversion!(
+  from: ScalarFieldName,
+  to: SelectableFieldName
+);
+```
+
+---
+
+## Watch mode
+
+<Steps>
+
+- Re-runs batch mode compiler if any file changes
+- Todo: Incremental recompilation, etc.
+
+</Steps>
+
+---
+
+# TLDR
+
+<Steps>
+
+- Developers write components & dependencies using `iso` literals
+- Compiler finds these `iso` literals and generates files
+- Runtime uses those generated files
+
+</Steps>
+
+---
+
+<img
+  src="http://localhost:8001/static/pumpkins.jpg"
+  style={{ maxWidth: "50vw" }}
+/>
+
+---
+
+# What's next?
+
+---
+
+## Feature parity with <span id="blue">Relay</span>
+
+<Steps>
+
+- Granular re-rendering
+- Garbage collection
+- Subscriptions
+- More ways to write mutations
+- `@defer`
+- And generated files loaded when needed
+- Local updates
+
+</Steps>
+
+---
+
+## Tooling
+
+<Steps>
+
+- VSCode extension
+- Generate schema extension files for GraphiQL
+
+</Steps>
+
+---
+
+## React, GraphQL and JavaScript<br/>are implementation details
+
+<Steps>
+
+- iOS and Android
+- Svelte, Vue, etc.
+- SQL
+
+</Steps>
+
+---
+
+## Server integration
+
+<Steps>
+
+- Teach your GraphQL server about fields defined in `` iso`...`  `` literals
+
+</Steps>
+
+---
+
+# Let's talk <span id="blue">mutations</span>
+
+---
+
+## Mutations require users<br/>to have global knowledge
+
+---
+
+## Requiring global knowledge<br /><span id="blue">doesn't scale</span>
+
+---
 
 ## Compiler has global knowledge
 
-</Layout>
-
 ---
-
-<Layout>
 
 ```
 export const SetBestFriendInput = iso(`
@@ -494,4 +794,23 @@ export const SetBestFriendInput = iso(`
 });
 ```
 
-</Layout>
+---
+
+## Conditionally load client fields
+
+<Steps>
+
+### Did somebody say 3D/`@match`
+
+</Steps>
+
+<Notes>
+
+- We can get even more clever
+- Select nullable field, such as best friend
+- Optimistically download JavaScript
+- Or only download JavaScript if we actually encounter a non-null best friend
+- Interface
+- 🔶 Did somebody say 3D and match?
+
+</Notes>
